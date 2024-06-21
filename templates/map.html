@@ -1,0 +1,36 @@
+<!-- templates/map.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map View</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA5QMHianQfIeqE2fxK4jndJdOw40a6Sxk&callback=initMap" async defer></script>
+    <script>
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 4,
+                center: {lat: 35.6895, lng: 139.6917}
+            });
+
+            {% for item in items %}
+            var marker = new google.maps.Marker({
+                position: {lat: {{ item.latitude }}, lng: {{ item.longitude }}},
+                map: map,
+                title: 'Lost Item'
+            });
+
+            var infowindow = new google.maps.InfoWindow({
+                content: '<img src="{{ item.image.url }}" width="100" />'
+            });
+
+            marker.addListener('click', function() {
+                infowindow.open(map, marker);
+            });
+            {% endfor %}
+        }
+    </script>
+</head>
+<body>
+    <h1>Map View</h1>
+    <div id="map" style="height: 500px; width: 100%;"></div>
+</body>
+</html>

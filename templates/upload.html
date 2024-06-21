@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Lost Item</title>
+</head>
+<body>
+    <h1>Upload Lost Item</h1>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Upload</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    document.querySelector("[name='latitude']").value = position.coords.latitude;
+                    document.querySelector("[name='longitude']").value = position.coords.longitude;
+                }, function(error) {
+                    console.error("Error occurred while retrieving location: ", error);
+                });
+            } else {
+                console.error("Geolocation is not supported by this browser.");
+            }
+        });
+    </script>
+</body>
+</html>
